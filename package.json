@@ -1,6 +1,9 @@
 {
   "name": "18-nosql",
   "version": "1.0.0",
+  "engines": {
+    "node": "15.x"
+  },
   "private": true,
   "description": "",
   "main": "server.js",
