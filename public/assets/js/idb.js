@@ -1,15 +1,11 @@
-// create variable to hold db connection
 let db;
-// establish a connection to IndexedDB database called 'pizza_hunt'
-const request = indexedDB.open('pizza_hunt', 1);
-// this event will emit if the database version changes (nonexistant to version 1, v1 to v2, etc.)
+const request = indexedDB.open('pizza_hunt2021', 1);
+
 request.onupgradeneeded = function(event) {
-  // save a reference to the database 
   const db = event.target.result;
-  // create an object store (table) called `new_pizza`, set it to have an auto incrementing primary key of sorts 
-  db.createObjectStore('new_pizza', { autoIncrement: true });
+  db.createObjectStore('new_pizza2021', { autoIncrement: true });
 };
-// upon a successful 
+
 request.onsuccess = function(event) {
   // when db is successfully created with its object store (from onupgradedneeded event above), save reference to db in global variable
   db = event.target.result;
@@ -25,24 +21,21 @@ request.onerror = function(event) {
   console.log(event.target.errorCode);
 };
 
-// This function will be executed if we attempt to submit a new pizza and there's no internet connection
 function saveRecord(record) {
-  // open a new transaction with the database with read and write permissions 
-  const transaction = db.transaction(['new_pizza'], 'readwrite');
+  const transaction = db.transaction(['new_pizza2021'], 'readwrite');
 
-  // access the object store for `new_pizza`
-  const pizzaObjectStore = transaction.objectStore('new_pizza');
+  const pizzaObjectStore = transaction.objectStore('new_pizza2021');
 
-  // add record to your store with add method
+  // add record to your store with add method.
   pizzaObjectStore.add(record);
 }
 
 function uploadPizza() {
   // open a transaction on your pending db
-  const transaction = db.transaction(['new_pizza'], 'readwrite');
+  const transaction = db.transaction(['new_pizza2021'], 'readwrite');
 
   // access your pending object store
-  const pizzaObjectStore = transaction.objectStore('new_pizza');
+  const pizzaObjectStore = transaction.objectStore('new_pizza2021');
 
   // get all records from store and set to a variable
   const getAll = pizzaObjectStore.getAll();
@@ -64,8 +57,8 @@ function uploadPizza() {
             throw new Error(serverResponse);
           }
 
-          const transaction = db.transaction(['new_pizza'], 'readwrite');
-          const pizzaObjectStore = transaction.objectStore('new_pizza');
+          const transaction = db.transaction(['new_pizza2021'], 'readwrite');
+          const pizzaObjectStore = transaction.objectStore('new_pizza2021');
           // clear all items in your store
           pizzaObjectStore.clear();
         })
